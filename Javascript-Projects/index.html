@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="index.js"></script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Form Validation Script</title>
+</head>
+<body>
+    <div class="container">
+        <form id="form">
+            <h1>Register</h1>
+            <div class="input-control">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="password2">Password again</label>
+                <input type="password" name="password2" id="password2">
+                <div class="error"></div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
