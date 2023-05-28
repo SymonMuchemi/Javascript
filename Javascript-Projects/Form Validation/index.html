@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <title>Form Validation</title>
+</head>
+<body>
+<div class="container">
+    <form id="form">
+        <h1>Register</h1>
+        <div class="input-control">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+            <div class="error" id="Username-error" style="display: none">
+                <p>Please enter a valid username</p>
+            </div>
+        </div>
+        <div class="input-control">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+            <div class="error" id="email-error" style="display: none">
+                <p>Please enter a valid email</p>
+            </div>
+        </div>
+        <div class="input-control">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+            <div class="error" id="pwd-error" style="display: none" >
+                <p>Password must container at least 8 characters</p>
+            </div>
+        </div>
+        <div class="input-control">
+            <label for="password2">Password again</label>
+            <input type="password" name="password2" id="password2">
+            <div class="error" id="pwd2-error" style="display: none">
+                <p>Password mismatch</p>
+            </div>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>
