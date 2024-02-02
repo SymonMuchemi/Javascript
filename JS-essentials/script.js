@@ -204,4 +204,9 @@ let summary = `
 		genres: ${getGenres(myBook)}
 	`
 
-	console.log(summary)
+console.log(summary)
+
+// ternary operator; a better if...else statement
+
+const pagesRange = pages >= 1000 ? `${title} has over a 1000 pages`: `${title} has less than 1000 pages`;
+console.log(pagesRange)
