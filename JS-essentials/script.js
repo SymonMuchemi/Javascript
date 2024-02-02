@@ -143,7 +143,7 @@ function getBook(id) {
 	return data.find((d) => d.id === id);
 }
 
-myBook = getBook(1)
+myBook = getBook(2)
 
 // destructing the book object
 const { title, pages } = myBook;
@@ -226,4 +226,15 @@ console.log(myBook.hasMovieAdaptation && "This book has a movie adaptation")
 
 // logical OR
 
-console.log(true ∥ "THis statements")
+console.log(true || "THis statement wont be displayed")
+console.log(false || "displayed on falsy first argument value")
+
+// example using data object
+console.log(myBook.translations.german || "No German translation")
+
+
+// nullish coalescing operator '??'
+// checking if an attribute is null or defined and setting it to a 'No data' string value
+const bookReviewsCount = myBook.reviews.librarything.reviewsCount ?? "No data here"
+console.log(bookReviewsCount)
+
