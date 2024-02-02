@@ -210,3 +210,8 @@ console.log(summary)
 
 const pagesRange = pages >= 1000 ? `${title} has over a 1000 pages`: `${title} has less than 1000 pages`;
 console.log(pagesRange)
+
+// arrow function to get the year of book publication
+const getYearOfPublication = (book) => book.publicationDate.split('-')[0]
+
+console.log("Year of publication: " +  getYearOfPublication(myBook))
