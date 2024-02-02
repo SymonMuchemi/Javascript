@@ -214,5 +214,16 @@ console.log(pagesRange)
 // arrow function to get the year of book publication
 const getYearOfPublication = (book) => book.publicationDate.split('-')[0]
 
-
 console.log("Year of publication: " +  getYearOfPublication(myBook))
+
+//short circuiting
+// logical AND
+console.log(true && "This is displace coz of short-circuiting with logical AND")
+console.log(false && "This is displace coz of short-circuiting with logical AND")
+
+// displaying a text if the book has a movie adaptation
+console.log(myBook.hasMovieAdaptation && "This book has a movie adaptation")
+
+// logical OR
+
+console.log(true ∥ "THis statements")
