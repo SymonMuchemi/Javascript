@@ -163,7 +163,9 @@ console.log(secondaryGenre)
 
 getGenres = (book) => {
 	console.log("\nAll genres:")
+	let list = [...book.genres]
 	console.log(...book.genres)
+	return list;
 }
 getGenres(myBook)
 
@@ -171,3 +173,35 @@ getGenres(myBook)
 const [main, ...others] = myBook.genres
 console.log("The main genre is: " + main)
 console.log("Other genres: " + others)
+
+// creating a new array with elements from another array
+newArray = [...myBook.genres, 'appended genre']
+
+console.log(" New array of genres:")
+console.log(newArray)
+
+// new book object with new property
+
+myNewBook = {...myBook, moviePublicationDate: "2001-01-31"}
+
+console.log("Old book:\n" + JSON.stringify(myBook, null, 4))
+console.log("New book:\n" + JSON.stringify(myNewBook, null, 4))
+
+// overwriting object properties
+specialBook = {...myBook,
+	// adding a new property
+	availableInAfrica: true,
+
+	// overwriting an existing property
+	pages: 3220}
+console.log(JSON.stringify(specialBook, null, 4))
+
+// template literals
+
+let summary = `
+		The title is ${title}
+		big number ${298 ** 32}
+		genres: ${getGenres(myBook)}
+	`
+
+	console.log(summary)
