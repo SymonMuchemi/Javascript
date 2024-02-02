@@ -214,4 +214,5 @@ console.log(pagesRange)
 // arrow function to get the year of book publication
 const getYearOfPublication = (book) => book.publicationDate.split('-')[0]
 
+
 console.log("Year of publication: " +  getYearOfPublication(myBook))
