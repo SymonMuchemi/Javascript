@@ -31,3 +31,10 @@ console.log(booksWithMovieAdaptations)
 
 // console.log(longBooks)
 console.log("This should be visible!")
+
+// the reduce method
+// counting the total number of pages in all books
+
+let totalPages = booksData.reduce(((sum, book) => sum + book.pages), 0);
+
+console.log("All pages in library: " + totalPages)
