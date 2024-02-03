@@ -143,124 +143,128 @@ function getBook(id) {
 	return data.find((d) => d.id === id);
 }
 
-myBook = getBook(2)
+// myBook = getBook(2)
 
-// destructing the book object
-const { title, pages } = myBook;
+// // destructing the book object
+// const { title, pages } = myBook;
 
-console.log(title + "\n" + pages)
+// console.log(title + "\n" + pages)
 
-// array destructuring
-const [mainGenre, secondaryGenre] = myBook.genres;
+// // array destructuring
+// const [mainGenre, secondaryGenre] = myBook.genres;
 
-console.log(myBook.genres)
-console.log("After destructuring:")
-console.log(mainGenre)
-console.log(secondaryGenre)
+// console.log(myBook.genres)
+// console.log("After destructuring:")
+// console.log(mainGenre)
+// console.log(secondaryGenre)
 
-// the rest operator (...)
-// funtion to display all genres in an array
+// // the rest operator (...)
+// // funtion to display all genres in an array
 
-getGenres = (book) => {
-	console.log("\nAll genres:")
-	let list = [...book.genres]
-	console.log(...book.genres)
-	return list;
-}
-getGenres(myBook)
+// getGenres = (book) => {
+// 	console.log("\nAll genres:")
+// 	let list = [...book.genres]
+// 	console.log(...book.genres)
+// 	return list;
+// }
+// getGenres(myBook)
 
-// rest operator on arrays
-const [main, ...others] = myBook.genres
-console.log("The main genre is: " + main)
-console.log("Other genres: " + others)
+// // rest operator on arrays
+// const [main, ...others] = myBook.genres
+// console.log("The main genre is: " + main)
+// console.log("Other genres: " + others)
 
-// creating a new array with elements from another array
-newArray = [...myBook.genres, 'appended genre']
+// // creating a new array with elements from another array
+// newArray = [...myBook.genres, 'appended genre']
 
-console.log(" New array of genres:")
-console.log(newArray)
+// console.log(" New array of genres:")
+// console.log(newArray)
 
-// new book object with new property
+// // new book object with new property
 
-myNewBook = {...myBook, moviePublicationDate: "2001-01-31"}
+// myNewBook = {...myBook, moviePublicationDate: "2001-01-31"}
 
-console.log("Old book:\n" + JSON.stringify(myBook, null, 4))
-console.log("New book:\n" + JSON.stringify(myNewBook, null, 4))
+// console.log("Old book:\n" + JSON.stringify(myBook, null, 4))
+// console.log("New book:\n" + JSON.stringify(myNewBook, null, 4))
 
-// overwriting object properties
-specialBook = {...myBook,
-	// adding a new property
-	availableInAfrica: true,
+// // overwriting object properties
+// specialBook = {...myBook,
+// 	// adding a new property
+// 	availableInAfrica: true,
 
-	// overwriting an existing property
-	pages: 3220}
-console.log(JSON.stringify(specialBook, null, 4))
+// 	// overwriting an existing property
+// 	pages: 3220}
+// console.log(JSON.stringify(specialBook, null, 4))
 
-// template literals
+// // template literals
 
-let summary = `
-		The title is ${title}
-		big number ${298 ** 32}
-		genres: ${getGenres(myBook)}
-	`
+// let summary = `
+// 		The title is ${title}
+// 		big number ${298 ** 32}
+// 		genres: ${getGenres(myBook)}
+// 	`
 
-console.log(summary)
+// console.log(summary)
 
-// ternary operator; a better if...else statement
+// // ternary operator; a better if...else statement
 
-const pagesRange = pages >= 1000 ? `${title} has over a 1000 pages`: `${title} has less than 1000 pages`;
-console.log(pagesRange)
+// const pagesRange = pages >= 1000 ? `${title} has over a 1000 pages`: `${title} has less than 1000 pages`;
+// console.log(pagesRange)
 
-// arrow function to get the year of book publication
-const getYearOfPublication = (book) => book.publicationDate.split('-')[0]
+// // arrow function to get the year of book publication
+// const getYearOfPublication = (book) => book.publicationDate.split('-')[0]
 
-console.log("Year of publication: " +  getYearOfPublication(myBook))
+// console.log("Year of publication: " +  getYearOfPublication(myBook))
 
-//short circuiting
-// logical AND
-console.log(true && "This is displace coz of short-circuiting with logical AND")
-console.log(false && "This is displace coz of short-circuiting with logical AND")
+// //short circuiting
+// // logical AND
+// console.log(true && "This is displace coz of short-circuiting with logical AND")
+// console.log(false && "This is displace coz of short-circuiting with logical AND")
 
-// displaying a text if the book has a movie adaptation
-console.log(myBook.hasMovieAdaptation && "This book has a movie adaptation")
+// // displaying a text if the book has a movie adaptation
+// console.log(myBook.hasMovieAdaptation && "This book has a movie adaptation")
 
-// logical OR
+// // logical OR
 
-console.log(true || "THis statement wont be displayed")
-console.log(false || "displayed on falsy first argument value")
+// console.log(true || "THis statement wont be displayed")
+// console.log(false || "displayed on falsy first argument value")
 
-// example using data object
-console.log(myBook.translations.german || "No German translation")
-
-
-// nullish coalescing operator '??'
-// checking if an attribute is null or defined and setting it to a 'No data' string value
-const bookReviewsCount = myBook.reviews.librarything.reviewsCount ?? "No data here"
-console.log(bookReviewsCount)
-
-// optional chaining
-// counting the total reviews on a certain book without optional chaining
-
-function getTotalReviewCount(book) {
-	const goodreads = book.reviews.goodreads.reviewsCount
-	const librarything = book.reviews.librarything.reviewsCount
-
-	return goodreads + librarything
-}
-
-// with optional chaining with the nullish coalesdcing operator for unavailable values
-function getTotalReviewCountWithOptionalChaining(book) {
-	const goodreads = book.reviews.goodreads?.reviewsCount ?? 0
-	const librarything = book.reviews.librarything?.reviewsCount ?? 0
-
-	return goodreads + librarything
-}
-
-counts = getTotalReviewCount(myBook)
-
-book3ReviewCount = getTotalReviewCountWithOptionalChaining(getBook(3))
-console.log("Book 3, review count:" + book3ReviewCount)
-
-console.log("Total: " + counts)
+// // example using data object
+// console.log(myBook.translations.german || "No German translation")
 
 
+// // nullish coalescing operator '??'
+// // checking if an attribute is null or defined and setting it to a 'No data' string value
+// const bookReviewsCount = myBook.reviews.librarything.reviewsCount ?? "No data here"
+// console.log(bookReviewsCount)
+
+// // optional chaining
+// // counting the total reviews on a certain book without optional chaining
+
+// function getTotalReviewCount(book) {
+// 	const goodreads = book.reviews.goodreads.reviewsCount
+// 	const librarything = book.reviews.librarything.reviewsCount
+
+// 	return goodreads + librarything
+// }
+
+// // with optional chaining with the nullish coalesdcing operator for unavailable values
+// function getTotalReviewCountWithOptionalChaining(book) {
+// 	const goodreads = book.reviews.goodreads?.reviewsCount ?? 0
+// 	const librarything = book.reviews.librarything?.reviewsCount ?? 0
+
+// 	return goodreads + librarything
+// }
+
+// counts = getTotalReviewCount(myBook)
+
+// book3ReviewCount = getTotalReviewCountWithOptionalChaining(getBook(3))
+// console.log("Book 3, review count:" + book3ReviewCount)
+
+// console.log("Total: " + counts)
+
+// const books = getBooks();
+
+// console.log(books)
+
+module.exports = data
