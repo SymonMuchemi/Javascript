@@ -238,3 +238,28 @@ console.log(myBook.translations.german || "No German translation")
 const bookReviewsCount = myBook.reviews.librarything.reviewsCount ?? "No data here"
 console.log(bookReviewsCount)
 
+// optional chaining
+// counting the total reviews on a certain book without optional chaining
+
+function getTotalReviewCount(book) {
+	const goodreads = book.reviews.goodreads.reviewsCount
+	const librarything = book.reviews.librarything.reviewsCount
+
+	return goodreads + librarything
+}
+
+// with optional chaining with the nullish coalesdcing operator for unavailable values
+function getTotalReviewCountWithOptionalChaining(book) {
+	const goodreads = book.reviews.goodreads?.reviewsCount ?? 0
+	const librarything = book.reviews.librarything?.reviewsCount ?? 0
+
+	return goodreads + librarything
+}
+
+counts = getTotalReviewCount(myBook)
+
+book3ReviewCount = getTotalReviewCountWithOptionalChaining(getBook(3))
+console.log("Book 3, review count:" + book3ReviewCount)
+
+console.log("Total: " + counts)
+
