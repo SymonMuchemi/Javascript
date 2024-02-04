@@ -38,3 +38,27 @@ console.log("This should be visible!")
 let totalPages = booksData.reduce(((sum, book) => sum + book.pages), 0);
 
 console.log("All pages in library: " + totalPages)
+
+// sort method
+
+const arr = [1,2,3,3,4,54,5,6,34]
+const sortedArr = arr.sort((a, b) => a - b)
+const descendingArr = arr.sort((d, f) =>f - d)
+
+console.log("Sorted array: " + sortedArr)
+console.log("Sorted array descendingly: " + descendingArr)
+
+// sorting the books by number of pages
+
+const sortedBooksByPages = booksData.slice()
+                                    .sort((book1, book2) => book1.pages - book2.pages)
+                                    .map((book) =>  `${book.title}: ${book.pages}`);
+
+const booksSortedDescendingly = booksData.slice()
+                                        .sort((bk1, bk2) => bk2 - bk1)
+                                        .map(book => `${book.title}: ${book.pages}`)
+console.log("Sorted by pages: ")
+console.log(sortedBooksByPages)
+
+console.log("In descending order:")
+console.log(booksSortedDescendingly)
