@@ -1,0 +1,25 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: aquamarine;
+  align-items: center;
+}
+
+#products {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#products div {
+  width: 20vw;
+  min-width: 40vw;
+  height: fit-content;
+  padding: 20px;
+  border: 1px solid red;
+  border-radius: 10px;
+  background-color: white;
+}
