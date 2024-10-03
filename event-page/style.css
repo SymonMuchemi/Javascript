@@ -124,7 +124,7 @@ button:hover {
   width: 50%;
 }
 
-.form-div {
+.edit-form {
   display: flex;
   justify-content: center;
   flex-direction: column;

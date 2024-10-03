@@ -15,140 +15,151 @@ const fetchData = async (sortOption = null) => {
             data = data.sort((a, b) => new Date(a.date) - new Date(b.date));
         }
 
-        let output = '';
-        data.forEach((obj, index) => {
-            const { imageUrl, title, price, date, location, company } = obj;
+        const renderCards = () => {
+            let output = '';
+            data.forEach((obj, index) => {
+                const { imageUrl, title, price, date, location, company } = obj;
 
-            output += `
-                <div class='card' data-index="${index}">
-                    <img src=${imageUrl} alt=${location}/>
-                    <div class=text>
-                        <h2>${title}</h2>
-                        <p>${date}</p>
-                        <p>${company}</p>
-                        <p>${price}</p>
-                        <div class='buttons'>
-                            <button>Buy Now</button>
-                            <div class="data-buttons">
-                                <button class="view-btn">View</button>
-                                <button class="edit-btn">Edit</button>
-                                <button class="delete-btn">Delete</button>
+                output += `
+                    <div class='card' data-index="${index}">
+                        <img src=${imageUrl} alt=${location}/>
+                        <div class=text>
+                            <h2>${title}</h2>
+                            <p>${date}</p>
+                            <p>${company}</p>
+                            <p>${price}</p>
+                            <div class='buttons'>
+                                <button>Buy Now</button>
+                                <div class="data-buttons">
+                                    <button class="view-btn">View</button>
+                                    <button class="edit-btn">Edit</button>
+                                    <button class="delete-btn">Delete</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
-        });
-        container.innerHTML = output;
+                `;
+            });
+            container.innerHTML = output;
+            addEventListeners();
+        };
 
-        const viewButtons = document.querySelectorAll('.view-btn');
+        const addEventListeners = () => {
+            const viewButtons = document.querySelectorAll('.view-btn');
+            viewButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    console.log(data[index]);
 
-        viewButtons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                console.log(data[index]);
+                    let popup = document.querySelector('.popup');
 
-                let popup = document.querySelector('.popup');
-
-                if (popup) {
-                    if (popup.dataset.index === index.toString()) {
-                        popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+                    if (popup) {
+                        if (popup.dataset.index === index.toString()) {
+                            popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+                        } else {
+                            updatePopupContent(popup, data[index], index);
+                            popup.style.display = 'block';
+                        }
                     } else {
-                        updatePopupContent(popup, data[index], index);
-                        popup.style.display = 'block';
+                        popup = createPopup(data[index], index);
+                        container.appendChild(popup);
                     }
-                } else {
-                    popup = createPopup(data[index], index);
-                    container.appendChild(popup);
-                }
-            });
-        });
-
-        const deleteButtons = document.querySelectorAll('.delete-btn');
-
-        deleteButtons.forEach((button) => {
-            button.addEventListener('click', (event) => {
-                const card = event.target.closest('.card');
-                const index = parseInt(card.dataset.index);
-
-                card.remove();
-
-                data.splice(index, 1);
-
-                document.querySelectorAll('.card').forEach((card, newIndex) => {
-                    card.dataset.index = newIndex;
                 });
-
-                const popup = document.querySelector('.popup');
-                if (popup) {
-                    popup.remove();
-                }
-
-                console.log('Item deleted. Updated data:', data);
             });
-        });
 
-        const editButtons = document.querySelectorAll('.edit-btn');
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    const card = event.target.closest('.card');
+                    const index = parseInt(card.dataset.index);
 
-        editButtons.forEach((button) => {
-            button.addEventListener('click', (event) => {
-                const card = event.target.closest('.card');
-                const index = parseInt(card.dataset.index);
-                const { company, title, price, location, imageUrl } = data[index];
+                    card.remove();
+                    data.splice(index, 1);
 
-                let form = document.querySelector('.edit-form');
+                    document.querySelectorAll('.card').forEach((card, newIndex) => {
+                        card.dataset.index = newIndex;
+                    });
 
-                if (!form) {
-                    form = document.createElement('form');
-                    form.classList.add('form-div');
-                    form.innerHTML = `
-                        <label>
-                            Company:
-                            <input type="text" name="company" value="${company}">
-                        </label>
-                        <label>Title:
-                            <input type="text" name="title" value="${title}">
-                        </label>
-                        <label>Price:
-                            <input type="number" name="price" value="${price}">
-                        </label>
-                        <label>Location:
-                            <input type="text" name="location" value="${location}">
-                        </label>
-                        <label>Image URL:
-                            <input type="text" name="imageUrl" value="${imageUrl}">
-                        </label>
-                        <div class='buttons'>
-                            <button type="submit">Submit</button>
-                            <button type="button" class="cancel-btn">Cancel</button>
-                        </div>
-                    `;
-                    container.appendChild(form);
-                } else {
-                    form.company.value = company;
-                    form.title.value = title;
-                    form.price.value = price;
-                    form.location.value = location;
-                    form.imageUrl.value = imageUrl;
+                    const popup = document.querySelector('.popup');
+                    if (popup) {
+                        popup.remove();
+                    }
+
+                    console.log('Item deleted. Updated data:', data);
+                });
+            });
+
+            const editButtons = document.querySelectorAll('.edit-btn');
+            editButtons.forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    const card = event.target.closest('.card');
+                    const index = parseInt(card.dataset.index);
+                    const { company, title, price, date, location, imageUrl } = data[index];
+
+                    let form = document.querySelector('.edit-form');
+
+                    if (!form) {
+                        form = document.createElement('form');
+                        form.classList.add('edit-form');
+                        form.innerHTML = `
+                            <label>
+                                Company:
+                                <input type="text" name="company" value="${company}">
+                            </label>
+                            <label>Title:
+                                <input type="text" name="title" value="${title}">
+                            </label>
+                            <label>Price:
+                                <input type="number" name="price" value="${price}">
+                            </label>
+                            <label>Date:
+                                <input type="date" name="date" value="${date}">
+                            </label>
+                            <label>Location:
+                                <input type="text" name="location" value="${location}">
+                            </label>
+                            <label>Image URL:
+                                <input type="text" name="imageUrl" value="${imageUrl}">
+                            </label>
+                            <div class='buttons'>
+                                <button type="submit">Submit</button>
+                                <button type="button" class="cancel-btn">Cancel</button>
+                            </div>
+                        `;
+                        container.appendChild(form);
+                    } else {
+                        form.company.value = company;
+                        form.title.value = title;
+                        form.price.value = price;
+                        form.date.value = date;
+                        form.location.value = location;
+                        form.imageUrl.value = imageUrl;
+                    }
                     form.style.display = 'block';
-                }
 
-                form.onsubmit = (e) => {
-                    e.preventDefault();
-                    data[index].company = form.company.value;
-                    data[index].title = form.title.value;
-                    data[index].price = form.price.value;
-                    data[index].location = form.location.value;
-                    data[index].imageUrl = form.imageUrl.value;
+                    form.onsubmit = (e) => {
+                        e.preventDefault();
+                        data[index] = {
+                            ...data[index],
+                            company: form.company.value,
+                            title: form.title.value,
+                            price: parseFloat(form.price.value),
+                            date: form.date.value,
+                            location: form.location.value,
+                            imageUrl: form.imageUrl.value
+                        };
 
-                    fetchData();
-                    form.style.display = 'none';
-                };
+                        renderCards();
+                        form.style.display = 'none';
+                    };
 
-                form.querySelector('.cancel-btn').addEventListener('click', () => {
-                    form.style.display = 'none';
+                    form.querySelector('.cancel-btn').addEventListener('click', () => {
+                        form.style.display = 'none';
+                    });
                 });
             });
-        });
+        };
+
+        renderCards();
     }
     catch (error) {
         console.log(error);
