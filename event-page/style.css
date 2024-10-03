@@ -102,3 +102,7 @@ footer {
     color: var(--secondary-color);
   }
 }
+
+button:hover {
+  cursor: pointer;
+}
