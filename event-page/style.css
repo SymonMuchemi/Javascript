@@ -26,6 +26,7 @@ nav {
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  z-index: 3;
 }
 
 nav button {
@@ -105,4 +106,78 @@ footer {
 
 button:hover {
   cursor: pointer;
+}
+
+.data-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  /* width: 25vw; */
+}
+
+.data-buttons button {
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 5px;
+  width: 50%;
+}
+
+.form-div {
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+  padding: 30px 20px;
+  border: 1px soliud var(--primary-color);
+  background-color: lightblue;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  border-radius: 5px;
+}
+
+.form-div input {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid var(--primary-color);
+}
+
+.form-div button {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-dark);
+  color: var(--white);
+}
+
+.form-div button:hover {
+  background-color: var(--secondary-color);
+}
+
+.form-div .buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width: 20vw;
+  height: auto;
+  color: var(--white);
+  padding: 20px;
+  text-overflow: clip;
+  background-color: rgba(4, 20, 20, 0.9);
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
 }
