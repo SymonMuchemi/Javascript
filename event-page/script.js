@@ -1,4 +1,3 @@
-// Function to fetch and display data
 const fetchData = async (sortOption = null) => {
     try {
         const response = await fetch('data.json');
@@ -8,7 +7,6 @@ const fetchData = async (sortOption = null) => {
 
         console.log(data);
 
-        // Sort data based on the provided option
         if (sortOption === 'price-asc') {
             data = data.sort((a, b) => a.price - b.price);
         } else if (sortOption === 'price-desc') {
@@ -17,13 +15,12 @@ const fetchData = async (sortOption = null) => {
             data = data.sort((a, b) => new Date(a.date) - new Date(b.date));
         }
 
-        // Generate HTML for the cards
         let output = '';
-        data.forEach(obj => {
+        data.forEach((obj, index) => {
             const { imageUrl, title, price, date, location, company } = obj;
 
             output += `
-                <div class='card'>
+                <div class='card' data-index="${index}">
                     <img src=${imageUrl} alt=${location}/>
                     <div class=text>
                         <h2>${title}</h2>
@@ -34,8 +31,8 @@ const fetchData = async (sortOption = null) => {
                             <button>Buy Now</button>
                             <div class="data-buttons">
                                 <button class="view-btn">View</button>
-                                <button id="edit-btn">Edit</button>
-                                <button id="delete-btn">Delete</button>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -44,30 +41,112 @@ const fetchData = async (sortOption = null) => {
         });
         container.innerHTML = output;
 
-        // Add event listeners to the view buttons
         const viewButtons = document.querySelectorAll('.view-btn');
 
         viewButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
                 console.log(data[index]);
 
-                // Check if a popup already exists
                 let popup = document.querySelector('.popup');
 
                 if (popup) {
-                    // If popup exists, toggle its visibility
                     if (popup.dataset.index === index.toString()) {
                         popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
                     } else {
-                        // If it's a different item, update the popup content
                         updatePopupContent(popup, data[index], index);
                         popup.style.display = 'block';
                     }
                 } else {
-                    // If no popup exists, create a new one
                     popup = createPopup(data[index], index);
                     container.appendChild(popup);
                 }
+            });
+        });
+
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                const card = event.target.closest('.card');
+                const index = parseInt(card.dataset.index);
+
+                card.remove();
+
+                data.splice(index, 1);
+
+                document.querySelectorAll('.card').forEach((card, newIndex) => {
+                    card.dataset.index = newIndex;
+                });
+
+                const popup = document.querySelector('.popup');
+                if (popup) {
+                    popup.remove();
+                }
+
+                console.log('Item deleted. Updated data:', data);
+            });
+        });
+
+        const editButtons = document.querySelectorAll('.edit-btn');
+
+        editButtons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                const card = event.target.closest('.card');
+                const index = parseInt(card.dataset.index);
+                const { company, title, price, location, imageUrl } = data[index];
+
+                let form = document.querySelector('.edit-form');
+
+                if (!form) {
+                    form = document.createElement('form');
+                    form.classList.add('form-div');
+                    form.innerHTML = `
+                        <label>
+                            Company:
+                            <input type="text" name="company" value="${company}">
+                        </label>
+                        <label>Title:
+                            <input type="text" name="title" value="${title}">
+                        </label>
+                        <label>Price:
+                            <input type="number" name="price" value="${price}">
+                        </label>
+                        <label>Location:
+                            <input type="text" name="location" value="${location}">
+                        </label>
+                        <label>Image URL:
+                            <input type="text" name="imageUrl" value="${imageUrl}">
+                        </label>
+                        <div class='buttons'>
+                            <button type="submit">Submit</button>
+                            <button type="button" class="cancel-btn">Cancel</button>
+                        </div>
+                    `;
+                    container.appendChild(form);
+                } else {
+                    form.company.value = company;
+                    form.title.value = title;
+                    form.price.value = price;
+                    form.location.value = location;
+                    form.imageUrl.value = imageUrl;
+                    form.style.display = 'block';
+                }
+
+                form.onsubmit = (e) => {
+                    e.preventDefault();
+                    data[index].company = form.company.value;
+                    data[index].title = form.title.value;
+                    data[index].price = form.price.value;
+                    data[index].location = form.location.value;
+                    data[index].imageUrl = form.imageUrl.value;
+
+                    fetchData();
+                    form.style.display = 'none';
+                };
+
+                form.querySelector('.cancel-btn').addEventListener('click', () => {
+                    form.style.display = 'none';
+                });
             });
         });
     }
@@ -76,7 +155,6 @@ const fetchData = async (sortOption = null) => {
     }
 }
 
-// Function to create a new popup
 function createPopup(data, index) {
     const popup = document.createElement('div');
     popup.classList.add('popup');
@@ -88,7 +166,6 @@ function createPopup(data, index) {
     return popup;
 }
 
-// Function to update popup content
 function updatePopupContent(popup, data, index) {
     const { imageUrl, title, price, date, location, company } = data;
 
@@ -104,7 +181,6 @@ function updatePopupContent(popup, data, index) {
     popup.dataset.index = index;
 }
 
-// Event listeners for sorting buttons
 const sortByPriceAscendingButton = document.getElementById('price-asc');
 const sortByPriceDescendingButton = document.getElementById('price-desc');
 const sortByDateAscendingButton = document.getElementById('date');
@@ -114,5 +190,4 @@ sortByPriceAscendingButton.addEventListener('click', () => fetchData('price-asc'
 sortByPriceDescendingButton.addEventListener('click', () => fetchData('price-desc'));
 sortByDateAscendingButton.addEventListener('click', () => fetchData('date'));
 
-// Initial data fetch
 fetchData();
